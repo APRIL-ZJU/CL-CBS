@@ -1,0 +1,170 @@
+agents:
+  - start: [121, 298, 0]
+    name: agent0
+    goal: [28, 278, 3.14]
+  - start: [5, 23, 1.57]
+    name: agent1
+    goal: [54, 107, 0]
+  - start: [282, 219, -1.57]
+    name: agent2
+    goal: [143, 204, 1.57]
+  - start: [35, 148, 3.14]
+    name: agent3
+    goal: [126, 200, -1.57]
+  - start: [161, 23, 0]
+    name: agent4
+    goal: [252, 75, 3.14]
+  - start: [24, 3, 1.57]
+    name: agent5
+    goal: [4, 102, 0]
+  - start: [180, 171, -1.57]
+    name: agent6
+    goal: [283, 157, 1.57]
+  - start: [297, 165, 3.14]
+    name: agent7
+    goal: [154, 179, -1.57]
+  - start: [34, 237, 0]
+    name: agent8
+    goal: [131, 278, 3.14]
+  - start: [127, 86, 1.57]
+    name: agent9
+    goal: [3, 54, 0]
+  - start: [92, 50, -1.57]
+    name: agent10
+    goal: [224, 111, 1.57]
+  - start: [92, 279, 3.14]
+    name: agent11
+    goal: [132, 178, -1.57]
+  - start: [250, 275, 0]
+    name: agent12
+    goal: [184, 209, 3.14]
+  - start: [24, 199, 1.57]
+    name: agent13
+    goal: [109, 241, 0]
+  - start: [43, 176, -1.57]
+    name: agent14
+    goal: [162, 96, 1.57]
+  - start: [91, 163, 3.14]
+    name: agent15
+    goal: [13, 214, -1.57]
+  - start: [175, 191, 0]
+    name: agent16
+    goal: [142, 117, 3.14]
+  - start: [184, 158, 1.57]
+    name: agent17
+    goal: [100, 116, 0]
+  - start: [208, 17, -1.57]
+    name: agent18
+    goal: [118, 68, 1.57]
+  - start: [104, 71, 3.14]
+    name: agent19
+    goal: [197, 165, -1.57]
+  - start: [38, 126, 0]
+    name: agent20
+    goal: [136, 49, 3.14]
+  - start: [72, 16, 1.57]
+    name: agent21
+    goal: [169, 123, 0]
+  - start: [179, 128, -1.57]
+    name: agent22
+    goal: [259, 43, 1.57]
+  - start: [105, 7, 3.14]
+    name: agent23
+    goal: [11, 92, -1.57]
+  - start: [212, 292, 0]
+    name: agent24
+    goal: [232, 166, 3.14]
+  - start: [152, 103, 1.57]
+    name: agent25
+    goal: [112, 222, 0]
+  - start: [73, 104, -1.57]
+    name: agent26
+    goal: [193, 72, 1.57]
+  - start: [176, 95, 3.14]
+    name: agent27
+    goal: [123, 7, -1.57]
+  - start: [101, 218, 0]
+    name: agent28
+    goal: [32, 95, 3.14]
+  - start: [269, 190, 1.57]
+    name: agent29
+    goal: [243, 290, 0]
+  - start: [179, 242, -1.57]
+    name: agent30
+    goal: [86, 129, 1.57]
+  - start: [180, 64, 3.14]
+    name: agent31
+    goal: [215, 136, -1.57]
+  - start: [101, 89, 0]
+    name: agent32
+    goal: [223, 171, 3.14]
+  - start: [176, 4, 1.57]
+    name: agent33
+    goal: [91, 38, 0]
+  - start: [158, 13, -1.57]
+    name: agent34
+    goal: [18, 36, 1.57]
+  - start: [128, 28, 3.14]
+    name: agent35
+    goal: [44, 38, -1.57]
+  - start: [27, 222, 0]
+    name: agent36
+    goal: [120, 120, 3.14]
+  - start: [193, 5, 1.57]
+    name: agent37
+    goal: [101, 55, 0]
+  - start: [107, 159, -1.57]
+    name: agent38
+    goal: [174, 280, 1.57]
+  - start: [187, 258, 3.14]
+    name: agent39
+    goal: [93, 241, -1.57]
+  - start: [60, 258, 0]
+    name: agent40
+    goal: [110, 140, 3.14]
+  - start: [63, 34, 1.57]
+    name: agent41
+    goal: [138, 130, 0]
+  - start: [50, 122, -1.57]
+    name: agent42
+    goal: [28, 25, 1.57]
+  - start: [150, 227, 3.14]
+    name: agent43
+    goal: [18, 249, -1.57]
+  - start: [289, 262, 0]
+    name: agent44
+    goal: [231, 198, 3.14]
+  - start: [119, 264, 1.57]
+    name: agent45
+    goal: [201, 223, 0]
+  - start: [264, 75, -1.57]
+    name: agent46
+    goal: [293, 212, 1.57]
+  - start: [75, 190, 3.14]
+    name: agent47
+    goal: [90, 66, -1.57]
+  - start: [102, 197, 0]
+    name: agent48
+    goal: [216, 276, 3.14]
+  - start: [211, 93, 1.57]
+    name: agent49
+    goal: [77, 116, 0]
+  - start: [200, 60, -1.57]
+    name: agent50
+    goal: [142, 188, 1.57]
+  - start: [285, 9, 3.14]
+    name: agent51
+    goal: [175, 30, -1.57]
+  - start: [17, 173, 0]
+    name: agent52
+    goal: [83, 101, 3.14]
+  - start: [229, 126, 1.57]
+    name: agent53
+    goal: [109, 43, 0]
+  - start: [205, 281, -1.57]
+    name: agent54
+    goal: [208, 186, 1.57]
+map:
+  dimensions: [300, 300]
+  obstacles: 
+    - [-1, -1]

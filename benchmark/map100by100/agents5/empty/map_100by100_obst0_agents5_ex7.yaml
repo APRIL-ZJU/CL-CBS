@@ -1,0 +1,20 @@
+agents:
+  - start: [76, 11, 0]
+    name: agent0
+    goal: [82, 54, 1.57]
+  - start: [89, 16, 1.57]
+    name: agent1
+    goal: [73, 50, -1.57]
+  - start: [24, 24, -1.57]
+    name: agent2
+    goal: [52, 43, 3.14]
+  - start: [80, 20, 3.14]
+    name: agent3
+    goal: [33, 4, 0]
+  - start: [52, 2, 0]
+    name: agent4
+    goal: [26, 10, 1.57]
+map:
+  dimensions: [100, 100]
+  obstacles: 
+    - [-1, -1]

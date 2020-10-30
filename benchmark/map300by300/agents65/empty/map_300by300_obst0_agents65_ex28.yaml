@@ -1,0 +1,200 @@
+agents:
+  - start: [209, 243, 0]
+    name: agent0
+    goal: [298, 206, 1.57]
+  - start: [58, 115, 1.57]
+    name: agent1
+    goal: [64, 264, -1.57]
+  - start: [52, 65, -1.57]
+    name: agent2
+    goal: [164, 17, 3.14]
+  - start: [92, 215, 3.14]
+    name: agent3
+    goal: [182, 294, 0]
+  - start: [278, 105, 0]
+    name: agent4
+    goal: [186, 145, 1.57]
+  - start: [20, 36, 1.57]
+    name: agent5
+    goal: [147, 44, -1.57]
+  - start: [171, 151, -1.57]
+    name: agent6
+    goal: [71, 238, 3.14]
+  - start: [157, 79, 3.14]
+    name: agent7
+    goal: [68, 96, 0]
+  - start: [22, 194, 0]
+    name: agent8
+    goal: [171, 197, 1.57]
+  - start: [26, 27, 1.57]
+    name: agent9
+    goal: [144, 10, -1.57]
+  - start: [256, 149, -1.57]
+    name: agent10
+    goal: [120, 139, 3.14]
+  - start: [264, 181, 3.14]
+    name: agent11
+    goal: [178, 230, 0]
+  - start: [145, 141, 0]
+    name: agent12
+    goal: [231, 26, 1.57]
+  - start: [187, 206, 1.57]
+    name: agent13
+    goal: [87, 185, -1.57]
+  - start: [2, 97, -1.57]
+    name: agent14
+    goal: [61, 180, 3.14]
+  - start: [150, 155, 3.14]
+    name: agent15
+    goal: [63, 47, 0]
+  - start: [210, 200, 0]
+    name: agent16
+    goal: [114, 210, 1.57]
+  - start: [19, 100, 1.57]
+    name: agent17
+    goal: [75, 214, -1.57]
+  - start: [213, 295, -1.57]
+    name: agent18
+    goal: [288, 266, 3.14]
+  - start: [204, 284, 3.14]
+    name: agent19
+    goal: [141, 196, 0]
+  - start: [202, 22, 0]
+    name: agent20
+    goal: [255, 106, 1.57]
+  - start: [21, 74, 1.57]
+    name: agent21
+    goal: [77, 138, -1.57]
+  - start: [171, 273, -1.57]
+    name: agent22
+    goal: [286, 278, 3.14]
+  - start: [248, 288, 3.14]
+    name: agent23
+    goal: [176, 264, 0]
+  - start: [168, 72, 0]
+    name: agent24
+    goal: [31, 131, 1.57]
+  - start: [16, 125, 1.57]
+    name: agent25
+    goal: [108, 197, -1.57]
+  - start: [219, 78, -1.57]
+    name: agent26
+    goal: [234, 211, 3.14]
+  - start: [104, 162, 3.14]
+    name: agent27
+    goal: [63, 274, 0]
+  - start: [69, 18, 0]
+    name: agent28
+    goal: [108, 106, 1.57]
+  - start: [171, 96, 1.57]
+    name: agent29
+    goal: [269, 191, -1.57]
+  - start: [216, 285, -1.57]
+    name: agent30
+    goal: [208, 180, 3.14]
+  - start: [194, 227, 3.14]
+    name: agent31
+    goal: [143, 111, 0]
+  - start: [281, 196, 0]
+    name: agent32
+    goal: [146, 233, 1.57]
+  - start: [217, 231, 1.57]
+    name: agent33
+    goal: [85, 200, -1.57]
+  - start: [154, 186, -1.57]
+    name: agent34
+    goal: [262, 231, 3.14]
+  - start: [176, 171, 3.14]
+    name: agent35
+    goal: [88, 58, 0]
+  - start: [271, 287, 0]
+    name: agent36
+    goal: [168, 226, 1.57]
+  - start: [294, 289, 1.57]
+    name: agent37
+    goal: [160, 269, -1.57]
+  - start: [67, 196, -1.57]
+    name: agent38
+    goal: [139, 70, 3.14]
+  - start: [186, 220, 3.14]
+    name: agent39
+    goal: [83, 112, 0]
+  - start: [98, 72, 0]
+    name: agent40
+    goal: [31, 15, 1.57]
+  - start: [235, 68, 1.57]
+    name: agent41
+    goal: [106, 60, -1.57]
+  - start: [54, 255, -1.57]
+    name: agent42
+    goal: [18, 162, 3.14]
+  - start: [178, 134, 3.14]
+    name: agent43
+    goal: [81, 228, 0]
+  - start: [153, 91, 0]
+    name: agent44
+    goal: [166, 239, 1.57]
+  - start: [214, 168, 1.57]
+    name: agent45
+    goal: [108, 176, -1.57]
+  - start: [121, 69, -1.57]
+    name: agent46
+    goal: [214, 48, 3.14]
+  - start: [152, 27, 3.14]
+    name: agent47
+    goal: [259, 13, 0]
+  - start: [68, 29, 0]
+    name: agent48
+    goal: [6, 165, 1.57]
+  - start: [294, 41, 1.57]
+    name: agent49
+    goal: [184, 79, -1.57]
+  - start: [18, 89, -1.57]
+    name: agent50
+    goal: [131, 32, 3.14]
+  - start: [31, 180, 3.14]
+    name: agent51
+    goal: [39, 294, 0]
+  - start: [284, 181, 0]
+    name: agent52
+    goal: [262, 255, 1.57]
+  - start: [260, 268, 1.57]
+    name: agent53
+    goal: [209, 190, -1.57]
+  - start: [199, 157, -1.57]
+    name: agent54
+    goal: [124, 98, 3.14]
+  - start: [223, 199, 3.14]
+    name: agent55
+    goal: [87, 143, 0]
+  - start: [86, 75, 0]
+    name: agent56
+    goal: [162, 6, 1.57]
+  - start: [156, 62, 1.57]
+    name: agent57
+    goal: [275, 83, -1.57]
+  - start: [7, 107, -1.57]
+    name: agent58
+    goal: [113, 77, 3.14]
+  - start: [152, 219, 3.14]
+    name: agent59
+    goal: [43, 219, 0]
+  - start: [73, 271, 0]
+    name: agent60
+    goal: [106, 145, 1.57]
+  - start: [96, 153, 1.57]
+    name: agent61
+    goal: [45, 272, -1.57]
+  - start: [251, 91, -1.57]
+    name: agent62
+    goal: [151, 104, 3.14]
+  - start: [289, 67, 3.14]
+    name: agent63
+    goal: [202, 60, 0]
+  - start: [276, 21, 0]
+    name: agent64
+    goal: [191, 45, 1.57]
+map:
+  dimensions: [300, 300]
+  obstacles: 
+    - [-1, -1]

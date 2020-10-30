@@ -1,0 +1,170 @@
+agents:
+  - start: [86, 228, 0]
+    name: agent0
+    goal: [168, 298, 3.14]
+  - start: [227, 246, 1.57]
+    name: agent1
+    goal: [96, 276, 0]
+  - start: [53, 152, -1.57]
+    name: agent2
+    goal: [102, 240, 1.57]
+  - start: [121, 275, 3.14]
+    name: agent3
+    goal: [162, 202, -1.57]
+  - start: [188, 184, 0]
+    name: agent4
+    goal: [212, 36, 3.14]
+  - start: [144, 84, 1.57]
+    name: agent5
+    goal: [54, 178, 0]
+  - start: [38, 45, -1.57]
+    name: agent6
+    goal: [91, 162, 1.57]
+  - start: [287, 275, 3.14]
+    name: agent7
+    goal: [140, 290, -1.57]
+  - start: [244, 112, 0]
+    name: agent8
+    goal: [138, 73, 3.14]
+  - start: [15, 94, 1.57]
+    name: agent9
+    goal: [138, 173, 0]
+  - start: [188, 263, -1.57]
+    name: agent10
+    goal: [166, 175, 1.57]
+  - start: [118, 35, 3.14]
+    name: agent11
+    goal: [232, 55, -1.57]
+  - start: [284, 29, 0]
+    name: agent12
+    goal: [264, 104, 3.14]
+  - start: [153, 50, 1.57]
+    name: agent13
+    goal: [81, 108, 0]
+  - start: [74, 203, -1.57]
+    name: agent14
+    goal: [46, 73, 1.57]
+  - start: [209, 158, 3.14]
+    name: agent15
+    goal: [88, 82, -1.57]
+  - start: [132, 137, 0]
+    name: agent16
+    goal: [157, 276, 3.14]
+  - start: [202, 280, 1.57]
+    name: agent17
+    goal: [113, 209, 0]
+  - start: [88, 25, -1.57]
+    name: agent18
+    goal: [196, 14, 1.57]
+  - start: [257, 274, 3.14]
+    name: agent19
+    goal: [245, 187, -1.57]
+  - start: [7, 102, 0]
+    name: agent20
+    goal: [124, 99, 3.14]
+  - start: [243, 242, 1.57]
+    name: agent21
+    goal: [162, 129, 0]
+  - start: [19, 188, -1.57]
+    name: agent22
+    goal: [135, 96, 1.57]
+  - start: [55, 33, 3.14]
+    name: agent23
+    goal: [112, 134, -1.57]
+  - start: [80, 241, 0]
+    name: agent24
+    goal: [77, 155, 3.14]
+  - start: [294, 197, 1.57]
+    name: agent25
+    goal: [171, 120, 0]
+  - start: [74, 80, -1.57]
+    name: agent26
+    goal: [220, 63, 1.57]
+  - start: [24, 25, 3.14]
+    name: agent27
+    goal: [5, 132, -1.57]
+  - start: [128, 193, 0]
+    name: agent28
+    goal: [272, 174, 3.14]
+  - start: [226, 136, 1.57]
+    name: agent29
+    goal: [113, 49, 0]
+  - start: [71, 53, -1.57]
+    name: agent30
+    goal: [114, 120, 1.57]
+  - start: [138, 157, 3.14]
+    name: agent31
+    goal: [258, 143, -1.57]
+  - start: [76, 96, 0]
+    name: agent32
+    goal: [184, 117, 3.14]
+  - start: [229, 178, 1.57]
+    name: agent33
+    goal: [176, 61, 0]
+  - start: [294, 184, -1.57]
+    name: agent34
+    goal: [208, 221, 1.57]
+  - start: [19, 38, 3.14]
+    name: agent35
+    goal: [15, 174, -1.57]
+  - start: [165, 102, 0]
+    name: agent36
+    goal: [101, 175, 3.14]
+  - start: [219, 257, 1.57]
+    name: agent37
+    goal: [132, 276, 0]
+  - start: [97, 91, -1.57]
+    name: agent38
+    goal: [145, 195, 1.57]
+  - start: [38, 119, 3.14]
+    name: agent39
+    goal: [81, 261, -1.57]
+  - start: [114, 262, 0]
+    name: agent40
+    goal: [194, 201, 3.14]
+  - start: [196, 162, 1.57]
+    name: agent41
+    goal: [279, 94, 0]
+  - start: [213, 133, -1.57]
+    name: agent42
+    goal: [249, 25, 1.57]
+  - start: [124, 88, 3.14]
+    name: agent43
+    goal: [199, 85, -1.57]
+  - start: [27, 151, 0]
+    name: agent44
+    goal: [174, 146, 3.14]
+  - start: [64, 22, 1.57]
+    name: agent45
+    goal: [61, 120, 0]
+  - start: [36, 82, -1.57]
+    name: agent46
+    goal: [36, 197, 1.57]
+  - start: [155, 161, 3.14]
+    name: agent47
+    goal: [26, 117, -1.57]
+  - start: [117, 177, 0]
+    name: agent48
+    goal: [102, 50, 3.14]
+  - start: [278, 156, 1.57]
+    name: agent49
+    goal: [193, 61, 0]
+  - start: [38, 173, -1.57]
+    name: agent50
+    goal: [130, 58, 1.57]
+  - start: [245, 172, 3.14]
+    name: agent51
+    goal: [169, 235, -1.57]
+  - start: [291, 60, 0]
+    name: agent52
+    goal: [222, 99, 3.14]
+  - start: [232, 103, 1.57]
+    name: agent53
+    goal: [287, 213, 0]
+  - start: [197, 129, -1.57]
+    name: agent54
+    goal: [235, 269, 1.57]
+map:
+  dimensions: [300, 300]
+  obstacles: 
+    - [-1, -1]
