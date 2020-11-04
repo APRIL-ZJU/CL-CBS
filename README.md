@@ -37,13 +37,17 @@ benchmark
 
 The instance are in `yaml` format.
 
+A typical result from benchmark acts like below:
+
+<img src="img/dataset.gif" width="60%" height="60%">
+
 ## Credits 
 
 This code was developed by the  [APRIL Lab](https://github.com/APRIL-ZJU) in Zhejiang University.
 
 For researchers that have leveraged or compared to this work, please cite the following:
 
-Licheng Wen, Zhen Zhang, Zhe Chen, Xiangrui Zhao, and Yong Liu. CL-MAPF: Multi-Agent Path Finding for Car-Like Robots with Kinematic and Spatiotemporal Constraints.
+Licheng Wen, Zhen Zhang, Zhe Chen, Xiangrui Zhao, and Yong Liu. CL-MAPF: Multi-Agent Path Finding for Car-Like Robots with Kinematic and Spatiotemporal Constraints.[[arxiv](https://arxiv.org/abs/2011.00441)]
 
 ## License
 
