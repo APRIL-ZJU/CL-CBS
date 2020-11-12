@@ -1,0 +1,23 @@
+# The minimum turning radius of the vehicle
+r: 3
+deltat: 0.706
+# A movement cost penalty for turning (choosing non straight motion primitives)
+penaltyTurning: 1.5
+# A movement cost penalty for reversing (choosing motion primitives >
+# 2)
+penaltyReversing: 2.0
+# A movement cost penalty for change of direction (changing from primitives < 3 to primitives > 2)
+penaltyCOD: 2.0
+# map resolution
+mapResolution: 2.0
+
+# width of car
+carWidth: 2.0
+# distance from rear to vehicle front end
+LF: 2.0
+# distance from rear to vehicle back end
+LB: 1.0
+# obstacle default radius
+obsRadius: 0.8
+# least time to wait for constraint
+constraintWaitTime: 2
