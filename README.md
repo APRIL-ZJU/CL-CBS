@@ -11,8 +11,12 @@ The video demonstration can be found on [YouTube](https://www.youtube.com/watch?
 ## Source Code
 ### Requirement
 ```bash
-sudo apt-get install g++ cmake libboost-program-options-dev libyaml-cpp-dev clang-tidy clang-format python3-matplotlib libompl-dev libeigen3-dev
+sudo apt-get install g++ cmake libboost-program-options-dev libyaml-cpp-dev \
+clang-tidy clang-format python3-matplotlib libompl-dev libeigen3-dev
 ```
+> Note: Please make sure your `matplotlib` version is above `2.0`, otherwise it may show weird image while visualization. You can upgrade it by `pip3 install -U matplotlib`.
+
+
 ### Build
 ```bash
 mkdir build 
