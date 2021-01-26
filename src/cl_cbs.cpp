@@ -281,8 +281,8 @@ void readAgentConfig() {
   Constants::r = car_config["r"].as<double>();
   Constants::deltat = car_config["deltat"].as<double>();
   Constants::penaltyTurning = car_config["penaltyTurning"].as<double>();
-  Constants::penaltyReversing = car_config["penaltyTurning"].as<double>();
-  Constants::penaltyCOD = car_config["penaltyTurning"].as<double>();
+  Constants::penaltyReversing = car_config["penaltyReversing"].as<double>();
+  Constants::penaltyCOD = car_config["penaltyCOD"].as<double>();
   // map resolution
   Constants::mapResolution = car_config["mapResolution"].as<double>();
   // change to set calcIndex resolution
