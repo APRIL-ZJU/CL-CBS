@@ -12,7 +12,7 @@ import yaml
 import matplotlib
 matplotlib.use("Qt5Agg")
 
-PLOTLINE = False  # True
+PLOTLINE = True  # True
 
 carWidth = 2.0
 LF = 2.0
@@ -114,6 +114,7 @@ class Animation:
                                             frames=int(self.T+1) *
                                             framesPerMove,
                                             interval=100,
+                                            repeat=False,
                                             blit=True)
 
     def save(self, file_name, speed):

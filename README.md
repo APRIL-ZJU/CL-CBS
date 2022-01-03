@@ -2,7 +2,7 @@
 
 ## Overview
 
-**Car-Like Conflict Based Search (CL-CBS)** is an efficient and complete solver of Multi-Agent Path Finding for Car-like Robots problem. It applies a body conflict tree to address collisions considering the shape of agents. It also includes a new algorithm Spatiotemporal Hybrid-State A* as the single-agent path planner to generate path satisfying both kinematic and spatiotemporal constraints.
+**Car-Like Conflict-Based Search (CL-CBS)** is an efficient and complete solver of Multi-Agent Path Finding for Car-like Robots problem. It applies a body conflict tree to address collisions considering the shape of agents. It also includes a new algorithm Spatiotemporal Hybrid-State A* as the single-agent path planner to generate path satisfying both kinematic and spatiotemporal constraints.
 
 <img src="img/8car.gif" width="60%" height="60%">
 
@@ -82,12 +82,10 @@ A typical result from benchmark acts like below:
 
 ## Credits 
 
-This code was developed by the  [APRIL Lab](https://github.com/APRIL-ZJU) in Zhejiang University.
-
 For researchers that have leveraged or compared to this work, please cite the following:
 
-Licheng Wen, Zhen Zhang, Zhe Chen, Xiangrui Zhao, and Yong Liu. CL-MAPF: Multi-Agent Path Finding for Car-Like Robots with Kinematic and Spatiotemporal Constraints.[[arxiv](https://arxiv.org/abs/2011.00441)]
+L. Wen, Y. Liu and H. Li, "CL-MAPF: Multi-Agent Path Finding for Car-Like robots with kinematic and spatiotemporal constraints," Robotics and Autonomous Systems, 2021, doi:10.1016/j.robot.2021.103997.[[Reference](https://www.sciencedirect.com/science/article/pii/S0921889021002530)]
+
 
 ## License
-
-The code is provided under the [MIT License](https://opensource.org/licenses/MIT).
+The code was developed by the  [APRIL Lab](https://github.com/APRIL-ZJU) in Zhejiang University, and is provided under the [MIT License](https://opensource.org/licenses/MIT).

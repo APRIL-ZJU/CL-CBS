@@ -65,11 +65,11 @@ std::vector<double> dy = {0, -r *(1 - cos(deltat)), r *(1 - cos(deltat)),
 
 static inline float normalizeHeadingRad(float t) {
   if (t < 0) {
-    t = t - 2.f * M_PI * (int)(t / (2.f * M_PI));
+    t = t - 2.f * M_PI * static_cast<int>(t / (2.f * M_PI));
     return 2.f * M_PI + t;
   }
 
-  return t - 2.f * M_PI * (int)(t / (2.f * M_PI));
+  return t - 2.f * M_PI * static_cast<int>(t / (2.f * M_PI));
 }
 }  // namespace Constants
 
@@ -106,8 +106,8 @@ class Environment {
         m_lastGoalConstraint(-1),
         m_highLevelExpanded(0),
         m_lowLevelExpanded(0) {
-    m_dimx = (int)maxx / Constants::mapResolution;
-    m_dimy = (int)maxy / Constants::mapResolution;
+    m_dimx = static_cast<int>(maxx / Constants::mapResolution);
+    m_dimy = static_cast<int>(maxy / Constants::mapResolution);
     // std::cout << "env build " << m_dimx << " " << m_dimy << " "
     //           << m_obstacles.size() << std::endl;
     holonomic_cost_maps = std::vector<std::vector<std::vector<double>>>(
@@ -196,7 +196,7 @@ class Environment {
     //           std::endl;
   }
 
-  int admissibleHeuristic(const State &s) {
+  double admissibleHeuristic(const State &s) {
     // non-holonomic-without-obstacles heuristic: use a Reeds-Shepp
     ompl::base::ReedsSheppStateSpace reedsSheppPath(Constants::r);
     OmplState *rsStart = (OmplState *)reedsSheppPath.allocState();
@@ -212,21 +212,22 @@ class Environment {
                                 pow(m_goals[m_agentIdx].y - s.y, 2));
     // std::cout << "Euclidean cost:" << euclideanCost << std::endl;
     // holonomic-with-obstacles heuristic
-    double twoDoffset =
-        sqrt(pow((s.x - (int)s.x) -
-                     (m_goals[m_agentIdx].x - (int)m_goals[m_agentIdx].x),
-                 2) +
-             pow((s.y - (int)s.y) -
-                     (m_goals[m_agentIdx].y - (int)m_goals[m_agentIdx].y),
-                 2));
+    double twoDoffset = sqrt(pow((s.x - static_cast<int>(s.x)) -
+                                     (m_goals[m_agentIdx].x -
+                                      static_cast<int>(m_goals[m_agentIdx].x)),
+                                 2) +
+                             pow((s.y - static_cast<int>(s.y)) -
+                                     (m_goals[m_agentIdx].y -
+                                      static_cast<int>(m_goals[m_agentIdx].y)),
+                                 2));
     double twoDCost =
-        holonomic_cost_maps[m_agentIdx][(int)s.x / Constants::mapResolution]
-                           [(int)s.y / Constants::mapResolution] -
+        holonomic_cost_maps[m_agentIdx]
+                           [static_cast<int>(s.x / Constants::mapResolution)]
+                           [static_cast<int>(s.y / Constants::mapResolution)] -
         twoDoffset;
     // std::cout << "holonomic cost:" << twoDCost << std::endl;
 
     return std::max({reedsSheppCost, euclideanCost, twoDCost});
-    return 0;
   }
 
   bool isSolution(
@@ -457,14 +458,14 @@ class Environment {
     std::set<std::pair<int, int>> temp_obs_set;
     for (auto it = m_obstacles.begin(); it != m_obstacles.end(); it++) {
       temp_obs_set.insert(
-          std::make_pair((int)it->x / Constants::mapResolution,
-                         (int)it->y / Constants::mapResolution));
+          std::make_pair(static_cast<int>(it->x / Constants::mapResolution),
+                         static_cast<int>(it->y / Constants::mapResolution)));
     }
 
     for (size_t idx = 0; idx < m_goals.size(); idx++) {
       heap.clear();
-      int goal_x = (int)m_goals[idx].x / Constants::mapResolution;
-      int goal_y = (int)m_goals[idx].y / Constants::mapResolution;
+      int goal_x = static_cast<int>(m_goals[idx].x / Constants::mapResolution);
+      int goal_y = static_cast<int>(m_goals[idx].y / Constants::mapResolution);
       heap.push(std::make_pair(State(goal_x, goal_y, 0), 0));
 
       while (!heap.empty()) {
@@ -522,9 +523,10 @@ class Environment {
         if (!stateValid(nextState)) return false;
         result.emplace_back(std::make_pair<>(nextState, Constants::dx[0]));
       }
-      ratio = (deltaLength -
-               (int)(deltaLength / Constants::dx[act]) * Constants::dx[act]) /
-              Constants::dx[act];
+      ratio =
+          (deltaLength - static_cast<int>(deltaLength / Constants::dx[act]) *
+                             Constants::dx[act]) /
+          Constants::dx[act];
       dyaw = 0;
       dx = ratio * Constants::dx[act];
       dy = 0;
@@ -541,9 +543,10 @@ class Environment {
         result.emplace_back(std::make_pair<>(
             nextState, Constants::dx[0] * Constants::penaltyTurning));
       }
-      ratio = (deltaSteer - (int)(deltaSteer / Constants::dyaw[act]) *
-                                Constants::dyaw[act]) /
-              Constants::dyaw[act];
+      ratio =
+          (deltaSteer - static_cast<int>(deltaSteer / Constants::dyaw[act]) *
+                            Constants::dyaw[act]) /
+          Constants::dyaw[act];
       dyaw = ratio * Constants::dyaw[act];
       dx = Constants::r * sin(dyaw);
       dy = -Constants::r * (1 - cos(dyaw));
