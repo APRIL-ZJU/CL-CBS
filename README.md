@@ -84,7 +84,19 @@ A typical result from benchmark acts like below:
 
 For researchers that have leveraged or compared to this work, please cite the following:
 
-L. Wen, Y. Liu and H. Li, "CL-MAPF: Multi-Agent Path Finding for Car-Like robots with kinematic and spatiotemporal constraints," Robotics and Autonomous Systems, 2021, doi:10.1016/j.robot.2021.103997.[[Reference](https://www.sciencedirect.com/science/article/pii/S0921889021002530)]
+```
+@article{WEN2022103997,
+    title = {CL-MAPF: Multi-Agent Path Finding for Car-Like robots with kinematic and spatiotemporal constraints},
+    journal = {Robotics and Autonomous Systems},
+    volume = {150},
+    pages = {103997},
+    year = {2022},
+    issn = {0921-8890},
+    doi = {https://doi.org/10.1016/j.robot.2021.103997},
+    url = {https://www.sciencedirect.com/science/article/pii/S0921889021002530},
+    author = {Licheng Wen and Yong Liu and Hongliang Li},
+}
+```
 
 
 ## License
