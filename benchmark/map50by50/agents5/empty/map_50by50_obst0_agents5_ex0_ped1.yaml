@@ -1,0 +1,40 @@
+agents:
+  - start: [26, 5, 0]
+    name: agent0
+    goal: [12, 25, 1.57]
+  - start: [48, 47, 1.57]
+    name: agent1
+    goal: [37, 34, -1.57]
+  - start: [8, 13, -1.57]
+    name: agent2
+    goal: [23, 22, 3.14]
+  - start: [44, 27, 3.14]
+    name: agent3
+    goal: [30, 10, 0]
+  - start: [17, 10, 0]
+    name: agent4
+    goal: [6, 20, 1.57]
+
+pedestrians:
+  - name: ped0
+    trajectory:
+      - t: 13
+        x: 10.0
+        y: 22.5
+      - t: 14
+        x: 10.5
+        y: 22.5
+      - t: 15
+        x: 11.0
+        y: 22.5
+      - t: 16
+        x: 11.5
+        y: 22.5
+      - t: 17
+        x: 12.0
+        y: 22.5                
+
+map:
+  dimensions: [50, 50]
+  obstacles: 
+    - [-1, -1]

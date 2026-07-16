@@ -10,7 +10,7 @@ import argparse
 import numpy as np
 import yaml
 import matplotlib
-matplotlib.use("Qt5Agg")
+matplotlib.use("WebAgg")
 
 PLOTLINE = True  # True
 
@@ -47,6 +47,9 @@ class Animation:
         self.list_ydata = [[] for _ in range(0, len(map["agents"]))]
         self.agents = dict()
         self.agent_names = dict()
+        # 追加①歩行者表示
+        self.pedestrians = dict()
+        # 追加①
         # create boundary patch
         xmin = -1
         ymin = -1
@@ -83,7 +86,7 @@ class Animation:
             self.patches.append(Rectangle(
                 (d["goal"][0] - math.sqrt(cw/2*cw/2+lb*lb) * math.sin(math.atan2(lb, cw/2)+d["goal"][2]),
                  d["goal"][1] - math.sqrt(cw/2*cw/2+lb*lb) * math.cos(math.atan2(lb, cw/2)+d["goal"][2])),
-                lb+lf, cw, -d["goal"][2] / math.pi * 180,
+                lb+lf, cw, angle=-d["goal"][2] / math.pi * 180,
                 facecolor='none', edgecolor=cmap(i+1),  alpha=0.7, lw=1, linestyle=":"))
             self.list_xdata[i].append(d["start"][0])
             self.list_ydata[i].append(d["start"][1])
@@ -94,7 +97,7 @@ class Animation:
         for d, i in zip(map["agents"], range(0, len(map["agents"]))):
             name = d["name"]
             self.agents[name] = Rectangle(
-                (d["start"][0], d["start"][1]), 1, 2, 0.0, edgecolor='black', alpha=0.7)
+                (d["start"][0], d["start"][1]), 1, 2, angle=0.0, edgecolor='black', alpha=0.7)
             self.agents[name].original_face_color = cmap(i+1)
             self.patches.append(self.agents[name])
             self.T = max(self.T, schedule["schedule"][name][-1]["t"])
@@ -103,6 +106,38 @@ class Animation:
             self.agent_names[name].set_horizontalalignment('center')
             self.agent_names[name].set_verticalalignment('center')
             self.artists.append(self.agent_names[name])
+
+        # 追加箇所②
+        if "pedestrians" in map:
+            for p in map["pedestrians"]:
+                name = p["name"]
+                first = p["trajectory"][0]
+                self.pedestrians[name] = Circle(
+                    (first["x"], first["y"]),
+                    radius=0.5,
+                    facecolor="red",
+                    edgecolor="black"
+                )
+                self.patches.append(self.pedestrians[name])
+
+        # 画面の右上 (マップの最大寸法付近) にテキストを設置
+        self.time_text = self.ax.text(
+            self.map["map"]["dimensions"][0] - 0.5, 
+            self.map["map"]["dimensions"][1] - 0.5, 
+            't = 0.0', 
+            horizontalalignment='right', 
+            verticalalignment='top', 
+            fontsize=14, 
+            fontweight='bold', 
+            color='black',
+            bbox=dict(facecolor='white', alpha=0.7, edgecolor='none', pad=3),
+            zorder=10
+        )
+        # アニメーションの更新対象リスト (artists) に追加する
+        self.artists.append(self.time_text)
+
+
+        # 追加箇所②
 
         # self.ax.set_axis_off()
         # self.fig.axes[0].set_visible(False)
@@ -168,6 +203,25 @@ class Animation:
                     "agent", ""))].set_data(self.list_xdata[int(agent_name.replace(
                         "agent", ""))], self.list_ydata[int(agent_name.replace(
                             "agent", ""))])
+        
+        # 追加箇所④
+        if "pedestrians" in self.map:
+            for ped in self.map["pedestrians"]:
+                pos = self.getPedestrianState(
+                    i / framesPerMove,
+                    ped["trajectory"]
+                )
+                self.pedestrians[ped["name"]].center = (
+                    pos[0],
+                    pos[1]
+                )
+        # 追加箇所④
+
+        # ==========================================
+        # 【ここを追加】 現在の時間(t)を計算してテキストを更新
+        # ==========================================
+        current_t = i / framesPerMove
+        self.time_text.set_text(f't = {current_t:.1f}')
 
         # reset all colors
         for _, agent in self.agents.items():
@@ -198,6 +252,35 @@ class Animation:
             return pos
         else:
             return np.array([float(d[-1]["x"]), float(d[-1]["y"]), float(d[-1]["yaw"])])
+
+    # 追加箇所③    
+    def getPedestrianState(self, t, traj):
+        idx = 0
+        while idx < len(traj) and traj[idx]["t"] < t:
+            idx += 1
+        if idx == 0:
+            return np.array([
+                float(traj[0]["x"]),
+                float(traj[0]["y"])
+            ])
+        elif idx < len(traj):
+            last = np.array([
+                float(traj[idx-1]["x"]),
+                float(traj[idx-1]["y"])
+            ])
+            nxt = np.array([
+                float(traj[idx]["x"]),
+                float(traj[idx]["y"])
+            ])
+            dt = traj[idx]["t"] - traj[idx-1]["t"]
+            ratio = (t - traj[idx-1]["t"]) / dt
+            return last + (nxt-last)*ratio
+        else:
+            return np.array([
+                float(traj[-1]["x"]),
+                float(traj[-1]["y"])
+            ])
+    # 追加箇所③
 
 
 if __name__ == "__main__":
@@ -238,5 +321,5 @@ if __name__ == "__main__":
         matplotlib.use("Agg")
         animation.save(args.video, args.speed)
     else:
-        matplotlib.use("Qt5Agg")
+        # matplotlib.use("Qt5Agg")
         animation.show()

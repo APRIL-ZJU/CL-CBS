@@ -22,6 +22,15 @@
 #include "environment.hpp"
 #include "timer.hpp"
 
+// =====================================================================
+// 【追記箇所①】 cl_cbs.cpp の一番上（#include が並んでいる場所）に追加
+// =====================================================================
+#include <boost/geometry.hpp>
+#include <boost/geometry/geometries/point.hpp>
+#include <boost/geometry/geometries/box.hpp>
+#include <boost/geometry/index/rtree.hpp>
+// 追記箇所①
+
 using libMultiRobotPlanning::CL_CBS;
 using libMultiRobotPlanning::Neighbor;
 using libMultiRobotPlanning::PlanResult;
@@ -468,6 +477,215 @@ int main(int argc, char* argv[]) {
     out << "  makespan: " << makespan << std::endl;
     out << "  flowtime: " << flowtime << std::endl;
     out << "  runtime: " << timer << std::endl;
+
+    // =====================================================================
+// 【追記箇所②】 cl_cbs.cpp の下の方、「out << "schedule:" << std::endl;」の直前に追加
+// =====================================================================
+
+// 1. Boost.Geometry の型を定義（扱いやすいように名前をつけます）
+namespace bg = boost::geometry;
+namespace bgi = boost::geometry::index;
+
+// 2Dの点と箱（AABB）を定義
+typedef bg::model::point<double, 2, bg::cs::cartesian> Point2D;
+typedef bg::model::box<Point2D> Box2D;
+// R-treeに保存するデータの形：<箱, エージェントID, 時間t, 中心X, 中心Y>
+typedef std::tuple<Box2D, int, int, double, double> RTreeValue;
+
+// R-treeの本体を作成（検索を高速化するアルゴリズムとして quadratic を指定）
+bgi::rtree<RTreeValue, bgi::quadratic<16>> rtree;
+
+std::cout << "\n=== [Step 1] 経路データからR-treeを構築しています ===" << std::endl;
+// 2. すべてのエージェントの経路から、R-treeを構築する
+for (size_t agent_id = 0; agent_id < solution.size(); ++agent_id) {
+    for (const auto& state_pair : solution[agent_id].states) {
+        State s = state_pair.first;
+
+        // 車のAABB（真っ直ぐな箱）を作る
+        // 車の中心から前後左右に余裕を持たせた2.0mの箱を作ります
+        double margin = 2.0; 
+        Point2D min_p(s.x - margin, s.y - margin);
+        Point2D max_p(s.x + margin, s.y + margin);
+        Box2D car_aabb(min_p, max_p);
+
+        // 箱のデータと、その箱が「誰の、いつの、どこのデータか」をセットにしてR-treeに登録
+        RTreeValue value = std::make_tuple(car_aabb, agent_id, s.time, s.x, s.y);
+        rtree.insert(value);
+    }
+}
+std::cout << "R-treeの構築が完了しました！" << std::endl;
+
+
+// // 3. 【仮の歩行者を設定】 歩行者に「大きさ（半径）」を持たせる
+// // ※実際はLiDAR等からこの情報が入ってきます。テスト環境に合わせてX,Yを変更してください。
+// double ped_x = 11.0;     // 歩行者のX座標
+// double ped_y = 22.5;     // 歩行者のY座標
+// int ped_time = 15;       // 歩行者がそこにいる時間 t
+// double ped_radius = 0.5; // ★歩行者の大きさ（半径 0.5m）
+
+// std::cout << "\n=== [Step 2] 歩行者の影響範囲をR-treeで検索します ===" << std::endl;
+// // 歩行者をすっぽり覆う「検索用の箱」を作る
+// Point2D ped_min_p(ped_x - ped_radius, ped_y - ped_radius);
+// Point2D ped_max_p(ped_x + ped_radius, ped_y + ped_radius);
+// Box2D query_box(ped_min_p, ped_max_p);
+
+// // 検索結果を入れるための空のリスト
+// std::vector<RTreeValue> query_results;
+
+// // ★爆速検索！「この歩行者の箱(query_box)と重なっている車のデータを全部出して！」
+// rtree.query(bgi::intersects(query_box), std::back_inserter(query_results));
+// std::cout << "空間的に交差している（怪しい）データを " << query_results.size() << " 件抽出しました。" << std::endl;
+
+
+// std::cout << "\n=== [Step 3] 時間と精密距離のチェック（ナローフェーズ） ===" << std::endl;
+// bool collision_detected = false;
+
+// // 4. R-treeが拾ってきた「怪しいリスト」だけを精密検査する
+// for (const auto& result : query_results) {
+//     int   agent_id  = std::get<1>(result);
+//     int   state_t   = std::get<2>(result);
+//     double car_x    = std::get<3>(result);
+//     double car_y    = std::get<4>(result);
+
+//     // 【判定1】まずは「時間」が一致しているかチェック！
+//     if (state_t == ped_time) {
+        
+//         // 【判定2】時間が同じなら、歩行者と車の「実際の距離」を計算
+//         double distance = sqrt(pow(car_x - ped_x, 2) + pow(car_y - ped_y, 2));
+
+//         // 車と歩行者の距離が「車のマージン + 歩行者の半径」より近ければ衝突とみなす
+//         double safe_distance = 1.0 + ped_radius; // 例: 車のマージン1.0m + 歩行者半径0.5m
+
+//         if (distance < safe_distance) {
+//             std::cout << "🚨 【衝突検知】エージェント " << agent_id 
+//                       << " が時間 t=" << state_t 
+//                       << " に歩行者と衝突します！ (距離: " << distance << "m)" << std::endl;
+//             collision_detected = true;
+            
+//             // ★将来的に、ここで Online Path Repair（再計算）の関数を呼びます
+//         }
+//     }
+// }
+
+// if (!collision_detected) {
+//     std::cout << "✅ 指定した時間・場所に衝突するエージェントはいませんでした。安全です。" << std::endl;
+// }
+// std::cout << "========================================================\n" << std::endl;
+// //追加箇所②
+
+
+// =====================================================================
+// 【動く歩行者（線形）の設定】追加箇所②から歩行者が動くように変更
+// =====================================================================
+#include <set> // ★重複を防ぐために追加
+
+// Boost.Geometryで「線分（Segment）」を扱うための型を定義
+typedef bg::model::segment<Point2D> Segment2D;
+
+// 歩行者の軌跡（線分）のリスト
+// <始点X, 始点Y, 終点X, 終点Y, 始点時間t> で、t から t+1 への1コマの動きを「線」で表現します
+std::vector<std::tuple<double, double, double, double, int>> ped_segments = {
+    // t=13(10.0, 10.0) から t=14(10.5, 10.5) へ斜めに歩く線
+    std::make_tuple(10.0, 22.5, 10.5, 22.5, 13), 
+    // t=14(10.5, 10.5) から t=15(11.0, 11.0) へ斜めに歩く線
+    std::make_tuple(10.5, 22.5, 11.0, 22.5, 14),
+    // t=15(11.0, 11.0) から t=16(11.5, 11.0) へ真横に歩く線
+    std::make_tuple(11.0, 22.5, 11.5, 22.5, 15),
+
+    std::make_tuple(11.5, 22.5, 12.0, 22.5, 16),
+
+    std::make_tuple(12.0, 22.5, 12.5, 22.5, 17)
+};
+
+double ped_radius = 0.5; // 歩行者の大きさ（マージン）
+
+std::cout << "\n=== [Step 2 & 3] 歩行者の線形軌跡と衝突判定 ===" << std::endl;
+bool collision_detected = false;
+
+// ★重複出力防止用のセット（エージェントIDと時間のペアを記録）
+std::set<std::pair<int, int>> reported_collisions;
+
+// 4. 歩行者の「1コマ分の動く線（セグメント）」ごとにR-treeを検索する
+for (const auto& ped_seg : ped_segments) {
+    double start_x = std::get<0>(ped_seg);
+    double start_y = std::get<1>(ped_seg);
+    double end_x   = std::get<2>(ped_seg);
+    double end_y   = std::get<3>(ped_seg);
+    int    state_t = std::get<4>(ped_seg);
+
+    // 【検索用の箱（AABB）を作る】
+    // 歩行者が動く「線」全体をすっぽり覆う、マージン込みの長方形を作ります
+    double min_x = std::min(start_x, end_x) - ped_radius;
+    double max_x = std::max(start_x, end_x) + ped_radius;
+    double min_y = std::min(start_y, end_y) - ped_radius;
+    double max_y = std::max(start_y, end_y) + ped_radius;
+    Box2D query_box(Point2D(min_x, min_y), Point2D(max_x, max_y));
+
+    // 検索結果を入れるための空のリスト
+    std::vector<RTreeValue> query_results;
+
+    // ★爆速検索！「この歩行者の動く範囲(query_box)と重なっている車のデータを全部出して！」
+    rtree.query(bgi::intersects(query_box), std::back_inserter(query_results));
+
+    // 5. R-treeが拾ってきた「怪しいリスト」だけを精密検査する（ナローフェーズ）
+    for (const auto& result : query_results) {
+        int   agent_id  = std::get<1>(result);
+        int   car_t     = std::get<2>(result);
+        double car_x    = std::get<3>(result);
+        double car_y    = std::get<4>(result);
+
+        // 【判定1】「時間」が一致しているかチェック！
+        // 歩行者が t=15から16へ動く線分に対し、車の t=15 または t=16 のデータが対象になります
+        if (car_t == state_t || car_t == state_t + 1) {
+            
+            // 【判定2】時間が同じ（近い）なら、線分と点（車の中心）の最短距離を計算
+            Segment2D ped_line(Point2D(start_x, start_y), Point2D(end_x, end_y));
+            Point2D   car_point(car_x, car_y);
+            
+            // Boost.Geometryの便利な機能：線分と点の最短距離を一発で計算
+            double distance = bg::distance(car_point, ped_line);
+
+            // 車と歩行者の距離が「車のマージン + 歩行者の半径」より近ければ衝突とみなす
+            double safe_distance = 1.0 + ped_radius; 
+
+            if (distance < safe_distance) {
+              // 今回の衝突の「エージェントID」と「時間」のペアを作成
+                std::pair<int, int> collision_key = std::make_pair(agent_id, car_t);
+
+                if (reported_collisions.find(collision_key) == reported_collisions.end()) {
+                std::cout << "🚨 【衝突検知】エージェント " << agent_id 
+                          << " が時間 t=" << car_t 
+                          << " に歩行者の軌跡と衝突します！ (最短距離: " << distance << "m)" << std::endl;
+                collision_detected = true;
+                reported_collisions.insert(collision_key); // 報告済みとして記録
+                }
+                // ★将来的に、ここで Online Path Repair（再計算）のフラグを立てます
+            }
+          
+        }
+    }
+}
+
+if (!collision_detected) {
+    std::cout << "✅ 動く歩行者の軌跡（線形）との衝突は予測されませんでした。安全です。" << std::endl;
+}
+std::cout << "========================================================\n" << std::endl;
+
+// === 追加箇所③：経路リストの中身を確認するテストコードを追加 ===
+    std::cout << "\n=== エージェント0（1台目）の経路データを確認 ===" << std::endl;
+    // solution[0].states がエージェント0の経路リスト（配列）です
+    for (const auto& state_pair : solution[0].states) {
+        // ペアの中から、State（状態）だけを取り出す
+        State s = state_pair.first;
+        // ターミナルに 時間、X座標、Y座標、角度 を出力する
+        std::cout << "時刻 t=" << s.time 
+                  << " -> 座標(x: " << s.x 
+                  << ", y: " << s.y 
+                  << ", 角度: " << s.yaw << ")" << std::endl;
+    }
+    std::cout << "==============================================\n" << std::endl;
+    // === 追加箇所③ ===
+
     out << "schedule:" << std::endl;
     for (size_t a = 0; a < solution.size(); ++a) {
       // std::cout << "Solution for: " << a << std::endl;
