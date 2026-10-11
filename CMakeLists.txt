@@ -3,14 +3,15 @@ cmake_minimum_required(VERSION 3.5)
 project(CL-CBS)
 
 find_package(Boost 1.58 REQUIRED COMPONENTS program_options)
-find_package(yaml-cpp CONFIG REQUIRED)
+find_package(yaml-cpp CONFIG QUIET)
 if(TARGET yaml-cpp::yaml-cpp)
   set(CL_CBS_YAML_TARGET yaml-cpp::yaml-cpp)
 elseif(TARGET yaml-cpp)
   set(CL_CBS_YAML_TARGET yaml-cpp)
 else()
-  message(FATAL_ERROR
-    "yaml-cpp package exports neither yaml-cpp::yaml-cpp nor yaml-cpp")
+  find_package(PkgConfig REQUIRED)
+  pkg_check_modules(YamlCpp REQUIRED IMPORTED_TARGET yaml-cpp)
+  set(CL_CBS_YAML_TARGET PkgConfig::YamlCpp)
 endif()
 
 ## OPEN MOTION PLANNING LIBRARY
