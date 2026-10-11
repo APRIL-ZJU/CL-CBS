@@ -14,6 +14,8 @@ The video demonstration can be found on [YouTube](https://www.youtube.com/watch?
 sudo apt-get install g++ cmake libboost-program-options-dev libyaml-cpp-dev \
 clang-tidy clang-format python3-matplotlib libompl-dev libeigen3-dev
 ```
+The build selects the Reeds-Shepp API for the detected OMPL major version: `reedsShepp` for OMPL 1.x and `getPath` for OMPL 2.x. For yaml-cpp, it prefers the `yaml-cpp::yaml-cpp` imported target and falls back to the legacy `yaml-cpp` imported target (including release 0.6.3). The distribution packages above remain the Linux installation path.
+
 > Note: Please make sure your `matplotlib` version is above `2.0`, otherwise it may show weird image while visualization. You can upgrade it by `pip3 install -U matplotlib`.
 
 

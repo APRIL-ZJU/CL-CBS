@@ -3,8 +3,16 @@ cmake_minimum_required(VERSION 3.5)
 project(CL-CBS)
 
 find_package(Boost 1.58 REQUIRED COMPONENTS program_options)
-find_package(PkgConfig)
-pkg_check_modules(YamlCpp yaml-cpp)
+find_package(yaml-cpp CONFIG QUIET)
+if(TARGET yaml-cpp::yaml-cpp)
+  set(CL_CBS_YAML_TARGET yaml-cpp::yaml-cpp)
+elseif(TARGET yaml-cpp)
+  set(CL_CBS_YAML_TARGET yaml-cpp)
+else()
+  find_package(PkgConfig REQUIRED)
+  pkg_check_modules(YamlCpp REQUIRED IMPORTED_TARGET yaml-cpp)
+  set(CL_CBS_YAML_TARGET PkgConfig::YamlCpp)
+endif()
 
 ## OPEN MOTION PLANNING LIBRARY
 find_package(OMPL REQUIRED)
@@ -89,7 +97,7 @@ add_executable(SH_Astar
   src/sh_astar.cpp
 )
 target_link_libraries(SH_Astar
-  ${Boost_LIBRARIES}
+  Boost::program_options
   ${OMPL_LIBRARIES}
 )
 
@@ -97,10 +105,16 @@ target_link_libraries(SH_Astar
 add_executable(CL-CBS
   src/cl_cbs.cpp
 )
+# Prefer the selected yaml-cpp headers when another version shares OMPL's prefix.
+# Keep imported includes ordinary so BEFORE also precedes OMPL's -I paths.
+set_property(TARGET CL-CBS PROPERTY NO_SYSTEM_FROM_IMPORTED TRUE)
+target_include_directories(CL-CBS BEFORE PRIVATE
+  $<TARGET_PROPERTY:${CL_CBS_YAML_TARGET},INTERFACE_INCLUDE_DIRECTORIES>
+)
 target_link_libraries(CL-CBS
-  ${Boost_LIBRARIES}
+  Boost::program_options
   ${OMPL_LIBRARIES}
-  yaml-cpp
+  ${CL_CBS_YAML_TARGET}
 )
 
 ## test CL-CBS

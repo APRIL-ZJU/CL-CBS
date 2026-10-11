@@ -9,6 +9,7 @@
  */
 
 #pragma once
+#include <ompl/config.h>
 #include <ompl/base/State.h>
 #include <ompl/base/spaces/DubinsStateSpace.h>
 #include <ompl/base/spaces/ReedsSheppStateSpace.h>
@@ -244,8 +245,11 @@ class Environment {
     rsStart->setYaw(-state.yaw);
     rsEnd->setXY(getGoal().x, getGoal().y);
     rsEnd->setYaw(-getGoal().yaw);
-    ompl::base::ReedsSheppStateSpace::ReedsSheppPath reedsShepppath =
-        reedsSheppSpace.reedsShepp(rsStart, rsEnd);
+#if OMPL_MAJOR_VERSION >= 2
+    auto reedsShepppath = reedsSheppSpace.getPath(rsStart, rsEnd);
+#else
+    auto reedsShepppath = reedsSheppSpace.reedsShepp(rsStart, rsEnd);
+#endif
 
     std::vector<State> path;
     std::unordered_map<State, std::tuple<State, Action, double, double>,

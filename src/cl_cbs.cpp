@@ -14,6 +14,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include <boost/functional/hash.hpp>
+#include <boost/algorithm/string.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/program_options.hpp>
 #include <fstream>
